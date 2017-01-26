@@ -124,6 +124,7 @@ header {
   padding: 30px;
   border-bottom: 1px $border;
   &_title {
+    position: relative;
     color: $textDark;
   }
   &_time {
@@ -131,7 +132,7 @@ header {
     float: right;
     font-size: 0.6em;
   }
-  &:hover {
+  &:hover, &:focus {
     font-size: 1.2em;
   }
 }
@@ -161,8 +162,19 @@ header {
   text-decoration: line-through;
   color: $text;
   &::before {
-    content: "✔";
-    background: $highlight1;
     border: 3px solid $highlight1;
+    background: $highlight1;
+  }
+  &::after {
+    content: "";
+    position: absolute;
+    display: inline-block;
+    left: 8px;
+    margin-top: 8px;
+    width: 3px;
+    height: 8px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
   }
 }
