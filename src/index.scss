@@ -1,9 +1,168 @@
-.test {
-  background: red;
-  width: 100px;
-  height: 50px;
-  &::after {
-    content: "after";
-    color: blue;
+$border: solid #e3ebf3;
+$darkbg: #fcfcff;
+$lightbg: white;
+$text: #D2D3E3;
+$textDark: #8F8DA5;
+$highlight1: #F57173;
+$highlight2: #5A5EE7;
+
+html, body {
+  height: 100%;
+  width: 100%;
+  font-size: 24px;
+  font-family: 'Roboto', sans-serif;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  padding-top: 75px;
+  overflow: hidden;
+}
+* {box-sizing: inherit;}
+.background {
+  position: absolute;
+  width: 100%;
+  height: 150vh;
+  top: -25%;
+  transform: skewY(20deg);
+  .blue, .orange {
+    height: 50%;
+  }
+  .blue {
+    background: $highlight2;
+  }
+  .orange {
+    background: $highlight1;
+  }
+}
+
+.fab {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  background: $highlight1;
+  display: inline-block;
+  border-radius: 50%;
+  float: right;
+  clear: right;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.6);
+  transition: box-shadow 350ms ease;
+  &:hover {
+    box-shadow: 1px 3px 8px rgba(0,0,0,0.6);
+  }
+}
+
+.add {
+  &::after, &::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 25%;
+    height: 2px;
+    background: white;
+    border-radius: 1px;
+    transform: translate(-50%, -50%);
+    transform-origin: 50 50;
+  }
+  &::before {
+    transform: translate(-50%, -50%) rotate(90deg);
+  }
+}
+
+main {
+  position: relative;
+  width: 480px;
+  margin: auto;
+  background: $lightbg;
+  border-radius: 7px;
+  box-shadow: 0px 2px 4px rgba(0,0,0,0.4);
+}
+
+nav {
+  height: 130px;
+  width: 100%;
+  background: $darkbg;
+  color: $text;
+  padding: 30px;
+  margin-bottom: 35px;
+  border-bottom: 1px $border;
+  border-radius: inherit;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+  span {
+    font-size: 0.8em;
+    float: right;
+    margin: 20px 0px;
+  }
+}
+header {
+  display: inline-block;
+  color: $highlight2;
+  h1 {
+    font-size: 1em;
+    font-weight: lighter;
+    margin: 10px 0;
+  }
+  h3 {
+    color: $text;
+    font-size: 0.8em;
+    font-weight: lighter;
+    margin: 10px 0;
+  }
+}
+
+.todolist {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+  font-size: 0.7em;
+}
+.todo {
+  height: 80px;
+  padding: 30px;
+  border-bottom: 1px $border;
+  &_title {
+    color: $textDark;
+  }
+  &_time {
+    color: $text;
+    float: right;
+    font-size: 0.6em;
+  }
+  &:hover {
+    font-size: 1.2em;
+  }
+}
+
+// hide checkboxes
+.todo_checkbox {
+  position: absolute;
+  z-index: -9999;
+}
+// style pseudo element to be checkbox
+.todo_title::before {
+  content: "";
+  display: inline-block;
+  position: relative;
+  top: 4px;
+  width: 15px;
+  height: 15px;
+  border-radius: 2px;
+  border: 3px $border;
+  color: white;
+  background: transparent;
+  margin: 0 30px 0 0;
+  transition: background 350ms ease;
+}
+.todo_checkbox:checked + .todo_title{
+// .todo_checkbox:hover + .todo_title::before {
+  text-decoration: line-through;
+  color: $text;
+  &::before {
+    content: "✔";
+    background: $highlight1;
+    border: 3px solid $highlight1;
   }
 }

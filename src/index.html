@@ -2,9 +2,60 @@
 <html>
 <head>
 	<title>Todo app</title>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400" rel="stylesheet">
 </head>
 <body>
-<div class="test">testing</div>
+<div class="background">
+  <div class="blue"></div>
+  <div class="orange"></div>
+</div>
+<main>
+  <nav>
+    <header>
+      <h1>
+        <b>Thursday,</b> 10th
+      </h1>
+      <h3>December</h3>
+    </header>
+    <span>10 Tasks</span>
+
+    <a class="fab add" href="#"></a>
+</nav>
+
+<ul class="todolist">
+  <li class="todo">
+    <input class="todo_checkbox" type="checkbox" id="test"/>
+    <label for="test" class="todo_title">Morning run</label>
+    <span class="todo_time">7:00 AM</span>
+  </li>
+  <li class="todo">
+    <input class="todo_checkbox" type="checkbox" id="test1"/>
+    <label for="test1" class="todo_title">Shower</label>
+    <span class="todo_time">8:00 AM</span>
+  </li>
+  <li class="todo">
+    <input class="todo_checkbox" type="checkbox" id="test2"/>
+    <label for="test2" class="todo_title">Make breakfast</label>
+    <span class="todo_time">9:00 AM</span>
+  </li>
+  <li class="todo">
+    <input class="todo_checkbox" type="checkbox" id="test3"/>
+    <label for="test3" class="todo_title">Get ready for work</label>
+    <span class="todo_time">10:00 AM</span>
+  </li>
+  <li class="todo">
+    <input class="todo_checkbox" type="checkbox" id="test4"/>
+    <label for="test4" class="todo_title">Park on roundabout</label>
+    <span class="todo_time">12:00 AM</span>
+  </li>
+  <li class="todo" style="border-bottom: none;">
+    <input class="todo_checkbox" type="checkbox" id="test5"/>
+    <label for="test5" class="todo_title">Smash face on keyboard</label>
+    <span class="todo_time">14:00 PM</span>
+  </li>
+</ul>
+
+</main>
 <script src="../bin/app.bundle.js"></script>
 </body>
 </html>
