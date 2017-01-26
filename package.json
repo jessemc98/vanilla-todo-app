@@ -4,7 +4,9 @@
   "description": "vanilla todo app",
   "main": "index.js",
   "scripts": {
-    "start": "webpack --watch",
+    "start": "npm-run-parallel build:watch test:watch",
+    "build": "webpack",
+    "build:watch": "webpack --watch",
     "test": "mocha --color --reporter spec jsdom.conf.js src/*.test.js src/**/*.test.js",
     "test:watch": "npm test -- --watch"
   },
@@ -19,6 +21,7 @@
     "jsdom": "^9.9.1",
     "mocha": "^3.2.0",
     "node-sass": "4.3.0",
+    "npm-run-parallel": "^0.5.0",
     "sass-loader": "4.1.1",
     "style-loader": "0.13.1",
     "webpack": "2.2.0"
