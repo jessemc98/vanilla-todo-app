@@ -1,0 +1,9 @@
+.test {
+  background: red;
+  width: 100px;
+  height: 50px;
+  &::after {
+    content: "after";
+    color: blue;
+  }
+}
