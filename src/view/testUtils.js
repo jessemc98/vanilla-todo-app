@@ -47,3 +47,13 @@ export function hasExactProps(element, props) {
 
   return hasProps
 }
+
+export function hasClass(element, className) {
+  // if element.class is undefined or empty string then does not have class
+  if (!element.props.class || element.props.class === "") {
+    return false
+  }
+  // regex checks for exact match for className
+  const reg = new RegExp(`(^|\s)${className}(?=\s|$)`);
+  return reg.test(element.props.class)
+}

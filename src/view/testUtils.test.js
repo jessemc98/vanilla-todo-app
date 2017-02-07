@@ -153,3 +153,30 @@ describe("hasExactProps", function () {
     expect(utilities.hasExactProps(elem, props)).toBeTruthy()
   });
 });
+
+describe("hasClass", function () {
+  it("returns true if element.props.class contains given class", function () {
+    const elem = {props: {
+      class: 'this-is-my-class'
+    }}
+    const className = 'this-is-my-class'
+
+    expect(utilities.hasClass(elem, className)).toBeTruthy()
+  });
+  it("returns false if element.props.class does not contain given class", function () {
+    const elem = {props: {
+      class: 'this-is-my-class'
+    }}
+    const className = 'im-not-there'
+
+    expect(utilities.hasClass(elem, className)).toBeFalsy()
+  });
+  it("returns false if element.props.class contains a class which contains the given class", function () {
+    const elem = {props: {
+      class: 'this-is-my-class'
+    }}
+    const className = 'class'
+
+    expect(utilities.hasClass(elem, className)).toBeFalsy()
+  });
+});
