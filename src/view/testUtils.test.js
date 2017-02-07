@@ -76,3 +76,80 @@ describe("isElementTag", function () {
     expect(utilities.isElementTag(elem, 'ul')).toBeFalsy()
   });
 });
+
+describe("hasGivenProps", function () {
+  const elem = {props: {
+    one: '1',
+    two: '2',
+    three: '3'
+  }}
+  it("returns true if element.props contains object with same shape as given props", function () {
+    const props = {
+      one: '1',
+      two: '2',
+      three: '3'
+    }
+    expect(utilities.hasGivenProps(elem, props)).toBeTruthy()
+  });
+  it("returns true if element.props contains all properties in given props object", function () {
+    const props = {
+      one: '1',
+      two: '2'
+    }
+    expect(utilities.hasGivenProps(elem, props)).toBeTruthy()
+  });
+  it("returns false if element.props does not contain all properties in given props object", function () {
+    const props = {
+      one: '1',
+      two: '2',
+      four: '4'
+    }
+    expect(utilities.hasGivenProps(elem, props)).toBeFalsy()
+  });
+  it("returns false if element.props.key does not equal given props.key", function () {
+    const props = {
+      one: '2'
+    }
+    expect(utilities.hasGivenProps(elem, props)).toBeFalsy()
+  });
+});
+
+describe("hasExactProps", function () {
+  const elem = {props: {
+    one: '1',
+    two: '2',
+    three: '3'
+  }}
+  it("returns false if element.props contains a key/value pair not contained in given props object", function () {
+    const props = {
+      one: '1',
+      two: '2'
+    }
+    expect(utilities.hasExactProps(elem, props)).toBeFalsy()
+  });
+  it("returns false if given props object contains a key/value pair not contained in element.props", function () {
+    const props = {
+      one: '1',
+      two: '2',
+      three: '3',
+      four: '4'
+    }
+    expect(utilities.hasExactProps(elem, props)).toBeFalsy()
+  });
+  it("returns false if given props object contains a propety value not contained in element.props", function () {
+    const props = {
+      one: '1',
+      two: '2',
+      three: '4'
+    }
+    expect(utilities.hasExactProps(elem, props)).toBeFalsy()
+  });
+  it("returns true if element.props is an object with the same shape as given props", function () {
+    const props = {
+      one: '1',
+      two: '2',
+      three: '3'
+    }
+    expect(utilities.hasExactProps(elem, props)).toBeTruthy()
+  });
+});
