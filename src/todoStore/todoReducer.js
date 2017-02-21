@@ -2,7 +2,8 @@ import initialState from './initialState'
 import * as types from './eventTypes'
 
 export default function (state=initialState.todos, event) {
-  if (event.type === types.ADD_TODO) {
+  const { type } = event
+  if (type === types.ADD_TODO) {
     // check if todo with that id exists and throw error if so
     state.forEach(todo => {
       if (todo.id === event.payload.id) {
@@ -14,12 +15,21 @@ export default function (state=initialState.todos, event) {
     copy.push(event.payload)
     return copy
   }
-  if (event.type === types.REMOVE_TODO) {
+  if (type === types.REMOVE_TODO) {
     return state.filter(todo => todo.id !== event.payload.id)
   }
-  if (event.type === types.EDIT_TODO) {
+  if (type === types.EDIT_TODO) {
     return state.map(todo => {
       return todo.id === event.payload.id ? event.payload : todo
+    })
+  }
+  if (type == types.TOGGLE_CHECKED_TODO) {
+    const toggledId = event.payload.id
+    return state.map(todo => {
+      if (todo.id === toggledId) {
+        return Object.assign({}, todo, {checked: !todo.checked})
+      }
+      return todo
     })
   }
   return state

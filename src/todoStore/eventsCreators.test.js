@@ -42,4 +42,17 @@ describe("eventCreators", function () {
       expect(action.payload).toEqual(newTodo)
     });
   });
+  describe("toggleCheckedTodo", function () {
+    let id, action;
+    beforeEach(function () {
+      id = 123
+      action = events.toggleCheckedTodo(id)
+    });
+    it("returns action of type 'REMOVE_TODO'", function () {
+      expect(action.type).toEqual(eventTypes.TOGGLE_CHECKED_TODO)
+    });
+    it("returns a action with payload.id equal to passed id", function () {
+      expect(action.payload.id).toEqual(id)
+    });
+  });
 });

@@ -12,3 +12,10 @@ export function removeTodo(id) {
 }
 
 export const editTodo = genericEvent(type.EDIT_TODO)
+
+export function toggleCheckedTodo(id) {
+  return {
+    type: type.TOGGLE_CHECKED_TODO,
+    payload: { id }
+  }
+}
