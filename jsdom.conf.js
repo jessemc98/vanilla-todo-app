@@ -10,6 +10,9 @@
 
 process.env.NODE_ENV = 'test';
 
+// add expect as a global
+global.expect = require('expect')
+
 // Register babel so that it will transpile ES6 to ES5
 // before our tests run.
 require('babel-register')({
