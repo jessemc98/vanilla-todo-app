@@ -53,7 +53,10 @@ export function hasClass(element, className) {
   if (!element.props.class || element.props.class === "") {
     return false
   }
-  // regex checks for exact match for className
-  const reg = new RegExp(`(^|\s)${className}(?=\s|$)`);
-  return reg.test(element.props.class)
+
+  return (
+    element.props.class
+      .split(" ")
+      .indexOf(className) > -1
+  )
 }
