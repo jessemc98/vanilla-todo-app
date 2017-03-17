@@ -8,7 +8,15 @@ const mockTodo = {
   checked: true
 }
 describe("createTodo", function () {
+  const mockToggleCheckedTodo = () => {}
+  beforeEach(function () {
+    // mock dependencies
+    createTodo.__Rewire__('todoStore', {emit(){}})
+    createTodo.__Rewire__('toggleCheckedTodo', mockToggleCheckedTodo)
+  });
   afterEach(function () {
+    createTodo.__ResetDependency__('todoStore')
+    createTodo.__ResetDependency__('toggleCheckedTodo')
     createTodo.__ResetDependency__('numFormattedForView')
   });
   it("returns a MyElement instance", function () {
@@ -25,6 +33,37 @@ describe("createTodo", function () {
     const todo = createTodo(mockTodo)
 
     expect(hasClass(todo, 'todo')).toBeTruthy()
+  });
+  it("calls toggleCheckedTodo with the id of the todo when clicked", function () {
+    const toggleCheckedTodo = expect.createSpy()
+    createTodo.__Rewire__('toggleCheckedTodo', toggleCheckedTodo)
+
+    const id = 13
+    const todo = createTodo(
+      Object.assign({}, mockTodo, { id }))
+
+    const mockEvent = {stopPropagation(){}, preventDefault(){}}
+    todo.props.onclick(mockEvent)
+
+    expect(toggleCheckedTodo).toHaveBeenCalledWith(id)
+  });
+  it("calls store.emit with the return value of toggleCheckedTodo when clicked", function () {
+    const toggleCheckedTodoReturnValue = 'todos have been toggled dude!'
+    const toggleCheckedTodo = () => toggleCheckedTodoReturnValue
+    createTodo.__Rewire__('toggleCheckedTodo', toggleCheckedTodo)
+
+    const emit = expect.createSpy()
+    const mockStore = { emit }
+    createTodo.__Rewire__('todoStore', mockStore)
+
+    const id = 13
+    const todo = createTodo(
+      Object.assign({}, mockTodo, { id }))
+
+    const mockEvent = {stopPropagation(){}, preventDefault(){}}
+    todo.props.onclick(mockEvent)
+
+    expect(emit).toHaveBeenCalledWith(toggleCheckedTodoReturnValue)
   });
   describe("children", function () {
     describe("first child", function () {

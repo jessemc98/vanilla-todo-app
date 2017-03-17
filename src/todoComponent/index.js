@@ -1,7 +1,8 @@
 import { createElement } from '../view'
 
 import numFormattedForView from '../common/numFormattedForView'
-
+import { toggleCheckedTodo } from '../todoStore/eventsCreators'
+import todoStore from '../todoStore/store'
 // returns a 'Todo' view element when given a todo object from state
 export default function createTodo(todo) {
   const inputProps = {
@@ -17,7 +18,13 @@ export default function createTodo(todo) {
   return createElement(
     "li",
     {
-      class: `todo ${todo.highlight ? 'todo-'+todo.highlight : ''}`
+      class: `todo ${todo.highlight ? 'todo-'+todo.highlight : ''}`,
+      onclick(e) {
+        e.stopPropagation()
+        e.preventDefault()
+        todoStore.emit(
+          toggleCheckedTodo(todo.id))
+      }
     },
     [
       createElement("input", inputProps),
