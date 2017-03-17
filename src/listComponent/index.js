@@ -36,17 +36,66 @@ function createList(props){
         this.updateChildren(newChildren)
       },
       updateTodos(newTodos) {
-        const removed = this.state.todos
-          .filter(oldTodo => newTodos.indexOf(oldTodo) === -1)
-        const newItems = newTodos
-          .filter(newTodo => this.state.todos.indexOf(newTodo) === -1)
+        const findById = id => todo => todo.id === id
+        const copy = [...this.state.todos]
+        const removed = getRemoved(copy, newTodos)
+        const added = getNew(copy, newTodos)
+        const updated = getUpdated(copy, newTodos)
 
-        if (newItems.length > 0){
-          this.appendTodos(newItems)
+        function getRemoved(initial, target) {
+          return initial.filter(todo =>
+            // not in target
+            target.indexOf(todo) === -1 &&
+            // todo with same id not in target
+            target.findIndex(findById(todo.id)) === -1)
+        }
+        function getUpdated(initial, target) {
+          return (initial
+            .filter(todo => target.indexOf(todo) === -1)
+            .reduce((updated, current) => {
+              const indexOfTodoInNew = target.findIndex(findById(current.id))
+              let changed
+
+              if (indexOfTodoInNew  > -1) {
+                changed = {
+                  old: current,
+                  new: target[indexOfTodoInNew]
+                }
+              }
+
+              changed && updated.push(changed)
+              return updated
+            }, [])
+          )
+        }
+        function getNew(initial, target) {
+          return target.filter(
+            todo =>
+              initial.indexOf(todo) === -1 &&
+              initial.findIndex(findById(todo.id)) === -1
+          )
+        }
+
+        if (added.length > 0){
+          this.appendTodos(added)
         }
         if (removed.length > 0){
           this.clearGivenTodos(removed)
         }
+        if (updated.length > 0){
+          this.updateGivenTodos(updated)
+        }
+      },
+      updateGivenTodos(todos) {
+        const newChildren = [...this.children]
+        todos.forEach(todo => {
+          const index = this.state.todos.indexOf(todo.old)
+          const elem = createTodo(todo.new)
+
+          this.state.todos[index] = todo.new
+          newChildren[index] = elem
+        })
+        this.updateChildren(newChildren)
       }
     }
   )
